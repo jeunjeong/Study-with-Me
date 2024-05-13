@@ -8,7 +8,7 @@ function App(): JSX.Element {
 
   return (
     <React.Fragment>
-      <Recoil_Demo/>
+      <Recoil_Demo />
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="creator">Powered by electron-vite</div>
       <div className="text">
