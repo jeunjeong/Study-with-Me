@@ -1,11 +1,10 @@
 import React from 'react'
-
-import './SideBar.css'
+import { Container } from './Style'
 
 function SideBar() {
   return (
     <React.Fragment>
-      <div className="sidebar-container">This is Sidebar</div>
+      <Container className="sidebar-container">This is Sidebar</Container>
     </React.Fragment>
   )
 }
