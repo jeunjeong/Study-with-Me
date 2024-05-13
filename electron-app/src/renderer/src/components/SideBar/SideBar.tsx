@@ -8,9 +8,9 @@ import {
   SettingItem,
   SettingImg
 } from './Style'
-import todoicon from './todo-icon.png'
-import charticon from './chart-icon.png'
-import settingicon from './setting-icon.png'
+import todoicon from './icons/todo-icon.png'
+import charticon from './icons/chart-icon.png'
+import settingicon from './icons/setting-icon.png'
 import icon from './icon.png'
 
 function SideBar(): JSX.Element {
