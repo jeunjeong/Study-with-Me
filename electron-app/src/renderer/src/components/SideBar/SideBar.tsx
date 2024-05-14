@@ -9,21 +9,25 @@ import {
   SettingItem,
   SettingImg
 } from './Style'
-import todoicon from './icons/todo-icon.png'
-import charticon from './icons/chart-icon.png'
-import settingicon from './icons/setting-icon.png'
-import groupattend from './icons/groupattend-icon.png'
+import todoicon from './icons/todo-icon.svg'
+import charticon from './icons/chart-icon.svg'
+import settingicon from './icons/setting-icon.svg'
+import groupattend from './icons/groupattend-icon.svg'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { selectedGroup, mygrouplist, attendGroupModal, settingsModal } from './Atom'
+import { Pagestate, mygrouplist, attendGroupModal, settingsModal } from './Atom'
 
 function SideBar(): JSX.Element {
-  const [selectedGroupIndex, setSelectedGroupIndex] = useRecoilState(selectedGroup)
+  const [selectedIndex, setSelectedIndex] = useRecoilState(Pagestate)
   const [groups] = useRecoilState(mygrouplist)
   const navigate = useNavigate()
-  const selectGroup = (index: number): void => {
-    setSelectedGroupIndex(index)
-    if (index == 0) {
+  const selectGroup = (code: string): void => {
+    setSelectedIndex(code)
+    if (code == 'main') {
       navigate('/')
+    } else if (code == 'todo') {
+      navigate('/todo')
+    } else if (code == 'chart') {
+      navigate('/chart')
     } else {
       navigate('/group')
     }
@@ -37,13 +41,16 @@ function SideBar(): JSX.Element {
     <React.Fragment>
       <Container className="sidebar-container">
         <GroupSection>
+          <GroupsItem isSelected={selectedIndex == 'main'} onClick={() => selectGroup('main')}>
+            <GroupsImg src="icon.png" alt={`Main`}></GroupsImg>
+          </GroupsItem>
           {groups.map((group, index) => (
             <GroupsItem
-              isSelected={index == selectedGroupIndex}
+              isSelected={group[1] == selectedIndex}
               key={index}
-              onClick={() => selectGroup(index)}
+              onClick={() => selectGroup(group[1])}
             >
-              <GroupsImg src={group} alt={`Group ${index}`}></GroupsImg>
+              <GroupsImg src={group[2]} alt={`Group ${index}`}></GroupsImg>
             </GroupsItem>
           ))}
           <GroupsItem isSelected={false} onClick={() => showAttendGroupModal(true)}>
@@ -52,12 +59,12 @@ function SideBar(): JSX.Element {
         </GroupSection>
 
         <SettingSection>
-          <SettingItem>
+          <GroupsItem onClick={() => selectGroup('todo')} isSelected={selectedIndex == 'todo'}>
             <SettingImg src={todoicon} alt={`todo-icon`}></SettingImg>
-          </SettingItem>
-          <SettingItem>
+          </GroupsItem>
+          <GroupsItem onClick={() => selectGroup('chart')} isSelected={selectedIndex == 'chart'}>
             <SettingImg src={charticon} alt={`chart-icon`}></SettingImg>
-          </SettingItem>
+          </GroupsItem>
           <SettingItem onClick={() => showSettingModal(true)}>
             <SettingImg src={settingicon} alt={`setting-icon`}></SettingImg>
           </SettingItem>
