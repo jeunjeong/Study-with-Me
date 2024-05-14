@@ -1,0 +1,22 @@
+// Modal.tsx
+import React from 'react'
+import { Container, CloseButton, Title } from './Style'
+import { useSetRecoilState } from 'recoil'
+import { settingsModal } from '../SideBar/Atom'
+import closebuttonicon from './closebutton-icon.png'
+
+const SettingModal: React.FC = () => {
+  const showSettingModal = useSetRecoilState(settingsModal)
+  return (
+    <Container>
+      <Title>Settings</Title>
+      <CloseButton
+        src={closebuttonicon}
+        alt="closebutton-icon"
+        onClick={() => showSettingModal(false)}
+      />
+    </Container>
+  )
+}
+
+export default SettingModal
