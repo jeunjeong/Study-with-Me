@@ -9,6 +9,9 @@ export const Container = styled.div(() => [
   tw`
   `,
   css`
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 40px;
     min-height: 100vh; /* 뷰포트의 100% 높이 */
     max-height: 100%; /* 부모 요소의 높이를 초과하지 않음 */
@@ -19,6 +22,7 @@ export const Container = styled.div(() => [
     justify-content: space-between;
   `
 ])
+
 export const GroupSection = styled.div(() => [
   tw`
   `,
@@ -27,6 +31,7 @@ export const GroupSection = styled.div(() => [
     width: 100%;
   `
 ])
+
 export const GroupsItem = styled.div<GroupsItemProps>(({ isSelected }) => [
   tw`
   `,
@@ -38,6 +43,7 @@ export const GroupsItem = styled.div<GroupsItemProps>(({ isSelected }) => [
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: 0.3s ease;
     ${isSelected &&
     css`
       background-color: white;
@@ -75,6 +81,7 @@ export const SettingItem = styled.div(() => [
     justify-content: center;
   `
 ])
+
 export const SettingImg = styled.img(() => [
   tw`
   `,
