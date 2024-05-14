@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, CloseButton, Title } from './Style'
 import { useSetRecoilState } from 'recoil'
 import { settingsModal } from '../SideBar/Atom'
-import closebuttonicon from './closebutton-icon.png'
+import closebuttonicon from './icons/closebutton-icon.svg'
 
 const SettingModal: React.FC = () => {
   const showSettingModal = useSetRecoilState(settingsModal)
