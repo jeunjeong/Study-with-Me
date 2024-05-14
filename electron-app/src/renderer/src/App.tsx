@@ -1,36 +1,27 @@
 import React from 'react'
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
-import Recoil_Demo from './components/Recoil_Demo'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Sidebar from './components/SideBar/SideBar'
+import MainPage from './components/Main/MainPage'
+import GroupPage from './components/Group/GroupPage'
+import { useRecoilValue } from 'recoil'
+import { attendGroupModal, settingsModal } from './components/SideBar/Atom'
+import AttendGroupModal from './components/Modal/AttendGroupModal'
+import SettingModal from './components/Modal/SettingModal'
 
 function App(): JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-
+  const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
+  const isSettingModalOpen = useRecoilValue(settingsModal)
   return (
     <React.Fragment>
-      <Recoil_Demo />
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions></Versions>
+      <Router>
+        {isAttendGroupModalOpen && <AttendGroupModal />}
+        {isSettingModalOpen && <SettingModal />}
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/group" element={<GroupPage />} />
+        </Routes>
+      </Router>
     </React.Fragment>
   )
 }
