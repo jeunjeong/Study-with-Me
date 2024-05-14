@@ -1,14 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  Container,
-  GroupSection,
-  GroupsItem,
-  GroupsImg,
-  SettingSection,
-  SettingItem,
-  SettingImg
-} from './Style'
+import { Container, GroupSection, GroupsItem, GroupsImg, SettingSection, SettingImg } from './Style'
 import todoicon from './icons/todo-icon.svg'
 import charticon from './icons/chart-icon.svg'
 import settingicon from './icons/setting-icon.svg'
@@ -65,9 +57,9 @@ function SideBar(): JSX.Element {
           <GroupsItem onClick={() => selectGroup('chart')} isSelected={selectedIndex == 'chart'}>
             <SettingImg src={charticon} alt={`chart-icon`}></SettingImg>
           </GroupsItem>
-          <SettingItem onClick={() => showSettingModal(true)}>
+          <GroupsItem onClick={() => showSettingModal(true)} isSelected={false}>
             <SettingImg src={settingicon} alt={`setting-icon`}></SettingImg>
-          </SettingItem>
+          </GroupsItem>
         </SettingSection>
       </Container>
     </React.Fragment>

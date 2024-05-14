@@ -20,6 +20,8 @@ function App(): JSX.Element {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/group" element={<GroupPage />} />
+          <Route path="/todo" element={<MainPage />} />
+          <Route path="/chart" element={<GroupPage />} />
         </Routes>
       </Router>
     </React.Fragment>

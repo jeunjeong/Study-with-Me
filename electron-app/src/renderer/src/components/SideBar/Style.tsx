@@ -44,9 +44,16 @@ export const GroupsItem = styled.div<GroupsItemProps>(({ isSelected }) => [
     align-items: center;
     justify-content: center;
     transition: 0.3s ease;
+    cursor: pointer;
     ${isSelected &&
     css`
       background-color: white;
+    `}
+    ${!isSelected &&
+    css`
+      &:hover {
+        background-color: #7a7a7a;
+      }
     `}
   `
 ])
@@ -66,19 +73,7 @@ export const SettingSection = styled.div(() => [
   css`
     width: 100%;
     margin-bottom: 15px;
-  `
-])
-
-export const SettingItem = styled.div(() => [
-  tw`
-  `,
-  css`
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer;
   `
 ])
 
