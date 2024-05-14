@@ -2,13 +2,17 @@ import React from 'react'
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 import Recoil_Demo from './components/Recoil_Demo'
+import Header from './components/Header/Header'
+import Chat from './components/Chat/Chat'
+import { RecoilRoot } from 'recoil'
 
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
 
   return (
-    <React.Fragment>
-      <Recoil_Demo />
+    <RecoilRoot>
+      <React.Fragment>
+        {/* <Recoil_Demo />
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="creator">Powered by electron-vite</div>
       <div className="text">
@@ -29,9 +33,12 @@ function App(): JSX.Element {
             Send IPC
           </a>
         </div>
-      </div>
-      <Versions></Versions>
-    </React.Fragment>
+      </div> */}
+        {/* <Versions></Versions> */}
+        <Header></Header>
+        <Chat></Chat>
+      </React.Fragment>
+    </RecoilRoot>
   )
 }
 
