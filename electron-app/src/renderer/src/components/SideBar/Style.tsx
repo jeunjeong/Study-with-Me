@@ -5,7 +5,6 @@ interface GroupsItemProps {
   isSelected: boolean
 }
 
-
 export const Container = styled.div(() => [
   tw`
   `,
@@ -83,6 +82,5 @@ export const SettingImg = styled.img(() => [
   `,
   css`
     width: 80%;
-
   `
 ])
