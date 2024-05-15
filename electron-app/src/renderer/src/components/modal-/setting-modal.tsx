@@ -1,6 +1,6 @@
 // Modal.tsx
 import React from 'react'
-import { Container, CloseButton, Title } from './style'
+import { Container, CloseButton, Title } from './style-'
 import { useSetRecoilState } from 'recoil'
 import { settingsModal } from '../../recoil/sideatom'
 import closebuttonicon from './icons/closebutton-icon.svg'

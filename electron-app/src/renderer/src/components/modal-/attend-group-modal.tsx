@@ -9,7 +9,7 @@ import {
   ApplyButton,
   SmallIcon,
   ApplyButtonRight
-} from './style'
+} from './style-'
 import { useSetRecoilState } from 'recoil'
 import { attendGroupModal } from '../../recoil/sideatom'
 import closebuttonicon from './icons/closebutton-icon.svg'
