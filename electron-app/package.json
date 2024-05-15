@@ -25,7 +25,9 @@
     "@electron-toolkit/utils": "^3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@types/react-router-dom": "^5.3.3",
     "electron-updater": "^6.1.7",
+    "react-router-dom": "^6.23.1",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
@@ -51,5 +53,6 @@
     "twin.macro": "^3.4.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
-  }
+  },
+  "packageManager": "yarn@1.22.17"
 }
