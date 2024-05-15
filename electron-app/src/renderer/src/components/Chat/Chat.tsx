@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, ChatRoomdiv, ChatRoomClose } from './Style'
+import { Container, ChatRoomdiv, ChatRoomClose } from './style'
 import { useRecoilState } from 'recoil'
 import { chatRoomState } from '../../recoil/ChatAtom'
 import ChatIcon from '../../assets/cicon/chatimg.png'

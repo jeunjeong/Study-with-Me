@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Container, FriendListDiv, Img, ImgContainer, Imgdiv } from './Style'
+import { Container, FriendListDiv, Img, ImgContainer, Imgdiv } from './style'
 import jbc from '../../assets/profile/jbc.png'
 import hjh from '../../assets/profile/hjh.png'
 import kej from '../../assets/profile/kej.jpeg'
 import jej from '../../assets/profile/jej.png'
-import UserState from './User/UserState'
+import UserState from './user-window/user-state'
 
 function Friend({ name, isConnected, status, studySubject, img, onClick }) {
   if (isConnected) {

@@ -1,9 +1,6 @@
 import React from 'react'
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
-import Recoil_Demo from './components/Recoil_Demo'
-import Header from './components/Header/Header'
-import Chat from './components/Chat/Chat'
+import Header from './components/header/header'
+import Chat from './components/chat/chat'
 import { RecoilRoot } from 'recoil'
 
 function App(): JSX.Element {
@@ -12,29 +9,6 @@ function App(): JSX.Element {
   return (
     <RecoilRoot>
       <React.Fragment>
-        {/* <Recoil_Demo />
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div> */}
-        {/* <Versions></Versions> */}
         <Header></Header>
         <Chat></Chat>
       </React.Fragment>
