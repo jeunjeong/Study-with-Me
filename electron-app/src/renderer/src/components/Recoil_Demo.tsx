@@ -19,7 +19,7 @@ function CharacterCounter() {
     <div>
       <TextInput />
       <CharacterCount />
-      <ul className='ts'>
+      <ul className="ts">
         <li>src/renderer/src/components/Recoil_Demo</li>
         <li>src/renderer/styles/GlobalStyles.tsx</li>
       </ul>
@@ -33,7 +33,6 @@ function TextInput() {
   const onChange = (event) => {
     setText(event.target.value)
   }
-
 
   return (
     <div>
