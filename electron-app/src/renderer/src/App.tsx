@@ -9,7 +9,7 @@ import { attendGroupModal, settingsModal } from './recoil/sideatom'
 import AttendGroupModal from './components/modal/attend-group-modal'
 import SettingModal from './components/modal/setting-modal'
 import Header from './components/header/header'
-import Chat from './components/chat/chat'
+import Chat from './components/chat-/chat-'
 
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
