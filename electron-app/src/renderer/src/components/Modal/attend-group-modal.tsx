@@ -9,9 +9,9 @@ import {
   ApplyButton,
   SmallIcon,
   ApplyButtonRight
-} from './Style'
+} from './style'
 import { useSetRecoilState } from 'recoil'
-import { attendGroupModal } from '../SideBar/Atom'
+import { attendGroupModal } from '../../recoil/sideatom'
 import closebuttonicon from './icons/closebutton-icon.svg'
 import jointagicon from './icons/jointag-icon.svg'
 import joinbuttonicon from './icons/joinbutton-icon.svg'

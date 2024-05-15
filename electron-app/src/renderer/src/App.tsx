@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Sidebar from './components/SideBar/SideBar'
-import MainPage from './components/Main/MainPage'
-import GroupPage from './components/Group/GroupPage'
+import SideBar from './components/sidebar/sidebar'
+import Home from './components/main/home'
+import Group from './components/group/group'
 import { useRecoilValue } from 'recoil'
-import { attendGroupModal, settingsModal } from './components/SideBar/Atom'
-import AttendGroupModal from './components/Modal/AttendGroupModal'
-import SettingModal from './components/Modal/SettingModal'
+import { attendGroupModal, settingsModal } from './recoil/sideatom'
+import AttendGroupModal from './components/modal/attend-group-modal'
+import SettingModal from './components/modal/setting-modal'
 
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
@@ -16,12 +16,12 @@ function App(): JSX.Element {
       <Router>
         {isAttendGroupModalOpen && <AttendGroupModal />}
         {isSettingModalOpen && <SettingModal />}
-        <Sidebar />
+        <SideBar />
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/group" element={<GroupPage />} />
-          <Route path="/todo" element={<MainPage />} />
-          <Route path="/chart" element={<GroupPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/group" element={<Group />} />
+          <Route path="/todo" element={<Home />} />
+          <Route path="/group" element={<Group />} />
         </Routes>
       </Router>
     </React.Fragment>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, GroupSection, GroupsItem, GroupsImg, SettingSection, SettingImg } from './Style'
+import { Container, GroupSection, GroupsItem, GroupsImg, SettingSection, SettingImg } from './style'
 import todoicon from './icons/todo-icon.svg'
 import charticon from './icons/chart-icon.svg'
 import settingicon from './icons/setting-icon.svg'
 import groupattend from './icons/groupattend-icon.svg'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Pagestate, mygrouplist, attendGroupModal, settingsModal } from './Atom'
+import { Pagestate, mygrouplist, attendGroupModal, settingsModal } from '../../recoil/sideatom'
 
 function SideBar(): JSX.Element {
   const [selectedIndex, setSelectedIndex] = useRecoilState(Pagestate)

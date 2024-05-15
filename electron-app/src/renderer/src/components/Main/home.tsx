@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container } from './Style'
-function MainPage(): JSX.Element {
+import { Container } from './style'
+function Home(): JSX.Element {
   return (
     <React.Fragment>
       <Container>여기는 메에에에에ㅔ에ㅔ인</Container>
@@ -8,4 +8,4 @@ function MainPage(): JSX.Element {
   )
 }
 
-export default MainPage
+export default Home

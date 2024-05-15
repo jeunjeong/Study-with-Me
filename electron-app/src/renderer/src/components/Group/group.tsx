@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container } from './Style'
-function GroupPage(): JSX.Element {
+import { Container } from './style'
+function Group(): JSX.Element {
   return (
     <React.Fragment>
       <Container>여기는 그으으으룹</Container>
@@ -8,4 +8,4 @@ function GroupPage(): JSX.Element {
   )
 }
 
-export default GroupPage
+export default Group
