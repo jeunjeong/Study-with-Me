@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Img, ContentBox, CloseButton } from './style'
 import { useRecoilValue } from 'recoil'
-import { chatRoomState } from '../../../recoil/chatatom-'
+import { chatRoomState } from '../../../recoil/chatatom'
 import { relative } from 'path'
 
 function UserState({ user, onClose }) {
