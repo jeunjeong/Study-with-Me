@@ -1,10 +1,10 @@
 import React from 'react'
-import './Header.css'
+import { Container } from './Style'
 
 function Header() {
   return (
     <React.Fragment>
-      <div className="header-container">This is Header</div>
+      <Container className="header-container">This is Header</Container>
     </React.Fragment>
   )
 }
