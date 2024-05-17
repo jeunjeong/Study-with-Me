@@ -17,7 +17,7 @@ interface Group {
 
 interface ChatRoomProps {
   onClose: () => void
-  show: boolean
+  show: number
 }
 
 interface GroupCardProps {
@@ -52,8 +52,8 @@ const groups: Group[] = [
   }
 ]
 
-const ChatRoom: React.FC<ChatRoomProps> = ({ onClose, show }): JSX.Element => {
-  const [isMain, setIsMain] = useState<boolean>(false)
+const ChatMain: React.FC<ChatRoomProps> = ({ onClose, show }): JSX.Element => {
+  const [isMain, setIsMain] = useState<boolean>(true)
 
   useEffect(() => {
     if (!show) {
@@ -62,16 +62,17 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ onClose, show }): JSX.Element => {
       }, 100)
       return () => clearTimeout(timer)
     }
-  }, [show, onClose])
+  }, [show, isMain, onClose])
 
   const groupClickHandler = (groupId: number): void => {
     console.log(groupId, 'clicked!')
+    setIsMain(!isMain)
   }
   return (
     <React.Fragment>
       <c.Container show={show}>
         <c.Header>
-          {isMain && (
+          {!isMain && (
             <c.BackButton>
               <c.HeaderIcon src={back} alt="back" />
             </c.BackButton>
@@ -121,13 +122,17 @@ const Chat: React.FC = (): JSX.Element => {
   const [showChatRoom, setShowChatRoom] = useRecoilState(chatRoomState)
 
   const toggleChatRoom = () => {
-    setShowChatRoom(!showChatRoom)
+    if (showChatRoom === 0) {
+      setShowChatRoom(1)
+    } else if (showChatRoom !== 0) {
+      setShowChatRoom(showChatRoom * -1)
+    }
   }
 
   return (
     <React.Fragment>
       <c.Icon src={chatLogo} onClick={toggleChatRoom}></c.Icon>
-      <ChatRoom onClose={() => setShowChatRoom(false)} show={showChatRoom} />
+      <ChatMain onClose={toggleChatRoom} show={showChatRoom} />
     </React.Fragment>
   )
 }

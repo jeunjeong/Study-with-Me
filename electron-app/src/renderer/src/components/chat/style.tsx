@@ -66,17 +66,18 @@ export const Icon = styled.img(() => [
   `
 ])
 
-export const Container = styled.div(({ show }: { show?: boolean }) => [
+export const Container = styled.div(({ show = 0 }: { show?: number }) => [
   tw`
-    fixed right-0 top-0
+    fixed  top-0
   `,
   css`
-    /* padding-top: 32px; */
+    right: -30vw;
     width: 30vw;
     height: 100vh;
     background-color: #d9d9d9;
-    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5);
-    animation: ${show ? slideIn : slideOut} 0.5s forwards;
+
+    animation: ${show === 0 ? noAmin : show === 1 ? slideIn : slideOut} 0.5s forwards;
+    box-shadow: ${show === 1 ? '-2px 0 4px rgba(0, 0, 0, 0.5)' : 'none'};
 
     ${positionCenter};
     flex-direction: column;
@@ -244,20 +245,23 @@ export const Time = styled.p(() => [
   `
 ])
 
-const slideIn = keyframes`
+const slideOut = keyframes`
   from {
-    transform: translateX(110%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
   }
 `
 
-const slideOut = keyframes`
+const slideIn = keyframes`
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(110%);
+    transform: translateX(-100%);
   }
+`
+const noAmin = keyframes`
+
 `
