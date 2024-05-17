@@ -1,52 +1,263 @@
 import { css, keyframes } from '@emotion/react'
 import tw, { styled } from 'twin.macro'
 
-export const Container = styled.div(() => [
-  tw`
-    fixed bottom-3 right-3
+const disableTextDrag = css`
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+`
+const disableImageDrag = css`
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+`
+const resetFont = css`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+`
+const positionCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const scrollBar = css`
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #4a4a4a;
+    border-radius: 5px;
+  }
+
+  /* ::-webkit-scrollbar-track {
+    background-color: transparent;
+  } */
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #d9d9d9;
+  }
+`
+
+export const Icon = styled.img(() => [
+  tw`absolute right-4 bottom-4
   `,
   css`
-    width: 50px;
-    height: 50px;
+    ${disableImageDrag}
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    &:hover {
+      filter: opacity(0.6) drop-shadow(0 0 0 #000000);
+    }
   `
 ])
 
-export const ChatRoomdiv = styled.div(({ show }: { show?: boolean }) => [
+export const Container = styled.div(({ show }: { show?: boolean }) => [
   tw`
     fixed right-0 top-0
   `,
   css`
-    width: 350px;
-    height: 100%;
-    background: white;
+    /* padding-top: 32px; */
+    width: 30vw;
+    height: 100vh;
+    background-color: #d9d9d9;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.5);
     animation: ${show ? slideIn : slideOut} 0.5s forwards;
+
+    ${positionCenter};
+    flex-direction: column;
   `
 ])
 
-export const ChatRoomClose = styled.button(() => [
-  tw` 
+export const Header = styled.div(() => [
+  tw`
   `,
   css`
-    color: black;
+    /* position: absolute;
+    top: 0; */
+    width: 100%;
+    height: 32px;
+    background-color: #4a4a4a;
+    display: flex;
   `
 ])
 
-// ChatRoomdiv가 나타나는 애니메이션
+export const HeaderButton = styled.button(() => [
+  tw``,
+  css`
+    ${positionCenter}
+    background: none;
+    border: none;
+    transition: 0.1s ease;
+    cursor: pointer;
+    &:hover {
+      background-color: red;
+    }
+  `
+])
+
+export const BackButton = styled(HeaderButton)(() => [
+  tw``,
+  css`
+    margin-right: auto;
+  `
+])
+export const CloseButton = styled(HeaderButton)(() => [
+  tw``,
+  css`
+    margin-left: auto;
+  `
+])
+
+export const HeaderIcon = styled.img(() => [
+  tw``,
+  css`
+    ${disableImageDrag}
+    width: 20px;
+  `
+])
+
+export const GroupList = styled.div(() => [
+  tw``,
+  css`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    overflow-y: auto;
+    ${scrollBar}
+  `
+])
+
+export const GroupCard = styled.div(() => [
+  tw``,
+  css`
+    ${disableTextDrag}
+    width: 100%;
+    background-color: #fff;
+
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    /* margin: 0 8px; */
+    transition: 0.2s ease;
+    cursor: pointer;
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  `
+])
+
+export const GroupImage = styled.img(() => [
+  tw``,
+  css`
+    ${disableImageDrag}
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    margin: 0 8px;
+  `
+])
+
+export const ChatSummary = styled.div(() => [
+  tw``,
+  css`
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    overflow: hidden;
+  `
+])
+
+export const GroupName = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+    font-size: 0.8rem;
+    font-weight: 600;
+  `
+])
+export const GroupText = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+
+    color:#4A4A4A;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 1vw;
+  `
+])
+
+export const GroupStatus = styled.div(() => [
+  tw``,
+  css`
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 16px;
+    margin-right: 8px;
+  `
+])
+
+export const UnreadMessage = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+    display: inline;
+    background-color: red;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0 0.4rem;
+    border-radius: 15px;
+  `
+])
+export const Time = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+    color:#4A4A4A;
+    font-size: 0.6rem;
+    white-space: nowrap;
+  `
+])
+
 const slideIn = keyframes`
   from {
-    transform: translateX(100%);
+    transform: translateX(110%);
   }
   to {
     transform: translateX(0);
   }
 `
 
-// ChatRoomdiv가 사라지는 애니메이션
 const slideOut = keyframes`
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(110%);
   }
 `
