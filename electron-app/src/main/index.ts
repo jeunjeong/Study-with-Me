@@ -3,9 +3,12 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+// mainWindow를 전역 변수로 선언
+let mainWindow: BrowserWindow | null = null
+
 function createWindow(): void {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -18,7 +21,7 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
+    mainWindow?.show()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -26,8 +29,6 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -35,40 +36,72 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+// 기존의 코드에 이어서...
+
+ipcMain.on('open-auth-window', () => {
+  const authWindow = new BrowserWindow({
+    width: 500,
+    height: 600,
+    webPreferences: {}
+  })
+
+  authWindow.loadURL(
+    'https://kauth.kakao.com/oauth/authorize?client_id=d1026ac2d6b722ca41f83d55f503d590&redirect_uri=http://localhost:5173/oauth/callback&response_type=code'
+  )
+
+  authWindow.webContents.on('will-redirect', (event, newURL) => {
+    console.log(123, newURL)
+    const code = extractTokenFromURL(newURL) // 여기서 'extractTokenFromURL'은 가상의 함수입니다. 실제 구현이 필요합니다.
+    if (code) {
+      event.preventDefault()
+      authWindow.close()
+
+      // 여기서 mainWindow가 null이 아닌지 확인 후 사용
+      if (mainWindow) {
+        console.log('\ncode :: ')
+        console.log(code)
+        mainWindow.webContents.send('auth-token', code)
+      }
+    }
+  })
+
+  authWindow.on('closed', () => {
+    console.log('Auth window closed')
+  })
+})
+
+function extractTokenFromURL(url: string): string | null {
+  try {
+    // URL 객체를 생성하여 쿼리 파라미터를 분석합니다.
+    const urlObj = new URL(url)
+    // URLSearchParams 객체를 사용하여 'token' 쿼리 파라미터의 값을 얻습니다.
+    const token = urlObj.searchParams.get('code')
+
+    return token
+  } catch (error) {
+    console.error('Token 추출 중 오류 발생:', error)
+    return null
+  }
+}
