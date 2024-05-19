@@ -17,12 +17,12 @@ function App(): JSX.Element {
   return (
     <RecoilRoot>
       <React.Fragment>
-        <Header />
-        <Chat />
         <Router>
           {isAttendGroupModalOpen && <AttendGroupModal />}
           {isSettingModalOpen && <SettingModal />}
           <SideBar />
+          <Header />
+          <Chat />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/group" element={<Group />} />

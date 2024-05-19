@@ -76,7 +76,7 @@ export const Container = styled.div(({ show = 0 }: { show?: number }) => [
     height: 100vh;
     background-color: #d9d9d9;
 
-    animation: ${show === 0 ? noAmin : show === 1 ? slideIn : slideOut} 0.5s forwards;
+    animation: ${show === 0 ? noAnim : show === 1 ? slideIn : slideOut} 0.5s forwards;
     box-shadow: ${show === 1 ? '-2px 0 4px rgba(0, 0, 0, 0.5)' : 'none'};
 
     ${positionCenter};
@@ -88,10 +88,8 @@ export const Header = styled.div(() => [
   tw`
   `,
   css`
-    /* position: absolute;
-    top: 0; */
     width: 100%;
-    height: 32px;
+    min-height: 32px;
     background-color: #4a4a4a;
     display: flex;
   `
@@ -132,7 +130,7 @@ export const HeaderIcon = styled.img(() => [
   `
 ])
 
-export const GroupList = styled.div(() => [
+export const Content = styled.div(() => [
   tw``,
   css`
     width: 100%;
@@ -152,12 +150,11 @@ export const GroupCard = styled.div(() => [
     width: 100%;
     background-color: #fff;
 
-    height: 64px;
+    min-height: 64px;
 
     display: flex;
     align-items: center;
 
-    /* margin: 0 8px; */
     transition: 0.2s ease;
     cursor: pointer;
     &:hover {
@@ -245,6 +242,47 @@ export const Time = styled.p(() => [
   `
 ])
 
+export const ChatHeader = styled.div(() => [
+  tw``,
+  css`
+    position: relative;
+    top: 0;
+    height: 64px;
+    width: 100%;
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  `
+])
+
+export const MemberInfoText = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+    color:#4A4A4A;
+    font-size: 0.6rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 1vw;
+  `
+])
+
+export const ChatBox = styled.input(() => [
+  tw``,
+  css`
+    background-color: #fff;
+    border: none;
+    width: 100%;
+    height: 10vh;
+    padding: 0;
+    margin-top: auto;
+    outline: none;
+  `
+])
+
 const slideOut = keyframes`
   from {
     transform: translateX(-100%);
@@ -262,6 +300,6 @@ const slideIn = keyframes`
     transform: translateX(-100%);
   }
 `
-const noAmin = keyframes`
+const noAnim = keyframes`
 
 `
