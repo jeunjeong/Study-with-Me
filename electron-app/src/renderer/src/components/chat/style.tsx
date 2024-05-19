@@ -245,11 +245,14 @@ export const Time = styled.p(() => [
 export const ChatHeader = styled.div(() => [
   tw``,
   css`
+    ${disableTextDrag}
+
     position: relative;
     top: 0;
-    height: 64px;
+    min-height: 64px;
     width: 100%;
     background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     display: flex;
     flex-direction: row;
@@ -270,16 +273,170 @@ export const MemberInfoText = styled.p(() => [
   `
 ])
 
-export const ChatBox = styled.input(() => [
+export const ChatBox = styled.form(() => [
   tw``,
   css`
     background-color: #fff;
     border: none;
     width: 100%;
-    height: 10vh;
     padding: 0;
     margin-top: auto;
-    outline: none;
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  `
+])
+export const ChatInput = styled.textarea(() => [
+  tw``,
+  css`
+    height: 8vh;
+    border: none;
+    border-radius: 0;
+    resize: none;
+    padding: 3%;
+    font-size: 0.8rem;
+    color: #4a4a4a;
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #818181;
+    }
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #d9d9d9;
+      border-radius: 5px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #d9d9d9;
+    }
+  `
+])
+export const SendButton = styled.button(() => [
+  tw``,
+  css`
+    color: #fff;
+    width: 48px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #4a4a4a;
+    display: inline-block;
+    border: none;
+    margin-left: auto;
+    padding: 4px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+
+    cursor: pointer;
+    &:disabled {
+      background-color: #ccc;
+      color: #999;
+      cursor: default;
+    }
+  `
+])
+
+export const MessageLogContaner = styled.div(() => [
+  tw``,
+  css`
+    ${scrollBar}
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    flex: auto;
+    padding: 5% 0;
+  `
+])
+
+const messageContainer = css`
+  display: flex;
+  padding: 0 0.5vw;
+  margin-bottom: 8px;
+`
+const messageBox = css`
+  border-radius: 8px;
+  padding: 5px 8px;
+  color: black;
+  margin-top: 4px;
+  display: inline-block;
+  max-width: 12vw;
+`
+
+export const SentByCurrentUser = styled.div(() => [
+  tw``,
+  css`
+    ${messageContainer}
+    justify-content: flex-end;
+  `
+])
+
+export const SentByOtherUser = styled.div(() => [
+  tw``,
+  css`
+    ${messageContainer}
+    justify-content: flex-start;
+  `
+])
+
+export const CurrentUserMessageBox = styled.div(() => [
+  tw``,
+  css`
+    ${messageBox}
+    background-color: #ffffff;
+  `
+])
+export const OtherUserMessageBox = styled.div(() => [
+  tw``,
+  css`
+    ${messageBox}
+    background-color: #ffffff;
+  `
+])
+
+export const OtherUserMessageWrapper = styled.div(() => [
+  tw``,
+  css`
+    display: flex;
+    flex-direction: column;
+  `
+])
+
+export const MessageText = styled.p(() => [
+  tw``,
+  css`
+    ${resetFont}
+    width: 100%;
+    letter-spacing: 0;
+    float: left;
+    font-size: 0.8rem;
+    font-weight: 100;
+    word-wrap: break-word;
+  `
+])
+
+export const MessageName = styled(MessageText)(() => [
+  tw``,
+  css`
+    ${disableTextDrag}
+  `
+])
+
+export const UserImage = styled.img(() => [
+  tw``,
+  css`
+    ${disableImageDrag}
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    margin-right: 8px;
+    margin-top: 4px;
   `
 ])
 

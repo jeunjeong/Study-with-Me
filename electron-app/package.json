@@ -27,6 +27,7 @@
     "@emotion/styled": "^11.11.5",
     "@types/react-router-dom": "^5.3.3",
     "electron-updater": "^6.1.7",
+    "react-emoji": "^0.5.0",
     "react-router-dom": "^6.23.1",
     "recoil": "^0.7.7"
   },
