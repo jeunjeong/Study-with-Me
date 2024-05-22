@@ -67,9 +67,7 @@ ipcMain.on('open-auth-window', () => {
     webPreferences: {}
   })
 
-  authWindow.loadURL(
-    'https://kauth.kakao.com/oauth/authorize?client_id=d1026ac2d6b722ca41f83d55f503d590&redirect_uri=http://localhost:5173/oauth/callback&response_type=code'
-  )
+  authWindow.loadURL(`${import.meta.env.VITE_DOMAIN}/oauth/kakao/login`)
 
   authWindow.webContents.on('will-redirect', (event, newURL) => {
     console.log(123, newURL)

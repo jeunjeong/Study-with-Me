@@ -5,13 +5,7 @@ export const Container = styled.div(() => [
   tw`
   `,
   css`
-    width: 100wh;
-    height: 100vh;
-    background-color: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    outline: none;
   `
 ])
 
@@ -27,6 +21,7 @@ export const LoginButton = styled.button(() => [
     border-radius: 10px;
     color: #3a2929;
     font-size: 15px;
+    outline: none;
   `
 ])
 
