@@ -1,6 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import {
   ApiMovedPermanentlyResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiQuery,
 } from '@nestjs/swagger';
@@ -27,7 +28,7 @@ export const OauthCallbackDocs = () => {
       description: '액세스 토큰 및 리프레시 토큰을 발급한다.',
     }),
     ApiQuery({ name: 'code', type: 'string', required: true }),
-    ApiMovedPermanentlyResponse({
+    ApiOkResponse({
       headers: {
         accessToken: { description: '액세스 토큰 `http-only`' },
         refreshToken: { description: '리프레시 토큰 `http-only`' },
