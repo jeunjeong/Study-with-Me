@@ -67,7 +67,7 @@ ipcMain.on('open-auth-window', () => {
     webPreferences: {}
   })
 
-  authWindow.loadURL(`${import.meta.env.VITE_DOMAIN}/oauth/kakao/login`)
+  authWindow.loadURL(`${import.meta.env.VITE_DOMAIN}/oauth/kakao-login`)
 
   authWindow.webContents.on('will-redirect', (event, newURL) => {
     console.log(123, newURL)
