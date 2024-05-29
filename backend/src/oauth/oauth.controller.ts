@@ -40,8 +40,16 @@ export class OauthController {
     @Res() res: Response,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);
-    res.cookie('accessToken', accessToken, { httpOnly: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
     res.status(HttpStatus.OK).send();
   }
 
@@ -63,8 +71,16 @@ export class OauthController {
     @Res() res: Response,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);
-    res.cookie('accessToken', accessToken, { httpOnly: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
     res.status(HttpStatus.OK).send();
   }
 }
