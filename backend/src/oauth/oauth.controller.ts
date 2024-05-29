@@ -1,9 +1,7 @@
 import {
   Controller,
   Get,
-  HttpCode,
   HttpStatus,
-  Query,
   Redirect,
   Res,
   UseGuards,
@@ -27,10 +25,8 @@ export class OauthController {
   @Get('kakao-login')
   @Redirect()
   @OauthLoginDocs('kakao')
-  async kakaoLogin(
-    @Query('redirect_uri') redirect_uri?: string,
-  ): Promise<{ url: string }> {
-    redirect_uri ||= this.configService.get<string>('KAKAO_REDIRECT_URI');
+  async kakaoLogin(): Promise<{ url: string }> {
+    const redirect_uri = this.configService.get<string>('KAKAO_REDIRECT_URI');
     const client_id = this.configService.get<string>('KAKAO_CLIENT_ID');
     const url = `https://kauth.kakao.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`;
     return { url };
@@ -38,27 +34,22 @@ export class OauthController {
 
   @Get('kakao-callback')
   @UseGuards(AuthGuard('kakao'))
-  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   @OauthCallbackDocs()
   async kakaoCallback(
     @User() user: OauthInfo,
     @Res() res: Response,
-    @Query('redirect_uri') redirect_uri?: string,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);
     res.cookie('accessToken', accessToken, { httpOnly: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    redirect_uri ||= this.configService.get('CLIENT_URL');
-    return res.redirect(redirect_uri);
+    res.status(HttpStatus.OK).send();
   }
 
   @Get('github-login')
   @Redirect()
   @OauthLoginDocs('github')
-  async githubLogin(
-    @Query('redirect_uri') redirect_uri?: string,
-  ): Promise<{ url: string }> {
-    redirect_uri ||= this.configService.get<string>('GITHUB_REDIRECT_URI');
+  async githubLogin(): Promise<{ url: string }> {
+    const redirect_uri = this.configService.get<string>('GITHUB_REDIRECT_URI');
     const client_id = this.configService.get<string>('GITHUB_CLIENT_ID');
     const url = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}`;
     return { url };
@@ -66,17 +57,14 @@ export class OauthController {
 
   @Get('github-callback')
   @UseGuards(AuthGuard('github'))
-  @HttpCode(HttpStatus.MOVED_PERMANENTLY)
   @OauthCallbackDocs()
   async githubCallback(
     @User() user: OauthInfo,
     @Res() res: Response,
-    @Query('redirect_uri') redirect_uri?: string,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);
     res.cookie('accessToken', accessToken, { httpOnly: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    redirect_uri ||= this.configService.get('CLIENT_URL');
-    return res.redirect(redirect_uri);
+    res.status(HttpStatus.OK).send();
   }
 }
