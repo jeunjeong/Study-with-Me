@@ -9,10 +9,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/decorator/user.decorator';
-import { AuthService, OauthInfo } from 'src/auth/auth.service';
+import { AuthService } from 'src/auth/auth.service';
 import { Response } from 'express';
 import { OauthCallbackDocs, OauthLoginDocs } from './decorator/docs.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @ApiTags('OAUTH')
 @Controller('oauth')
@@ -36,7 +37,7 @@ export class OauthController {
   @UseGuards(AuthGuard('kakao'))
   @OauthCallbackDocs()
   async kakaoCallback(
-    @User() user: OauthInfo,
+    @User() user: CreateUserDto,
     @Res() res: Response,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);
@@ -69,7 +70,7 @@ export class OauthController {
   @UseGuards(AuthGuard('github'))
   @OauthCallbackDocs()
   async githubCallback(
-    @User() user: OauthInfo,
+    @User() user: CreateUserDto,
     @Res() res: Response,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.authService.getJWT(user);

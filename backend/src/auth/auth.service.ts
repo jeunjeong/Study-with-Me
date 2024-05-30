@@ -1,24 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
-
-enum Provider {
-  kakao = 'kakao',
-  github = 'github',
-}
-
-export class OauthInfo {
-  name: string;
-  email: string;
-  provider: Provider;
-}
-
-class TokenDTO {
-  accessToken: string;
-  refreshToken: string;
-}
 
 @Injectable()
 export class AuthService {
@@ -28,20 +13,20 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async getJWT(oauthInfo: OauthInfo): Promise<TokenDTO> {
-    // console.log('getJWT', oauthInfo);
-    const user = await this.validateUser(oauthInfo);
+  async getJWT(CreateUserDto: CreateUserDto) {
+    // console.log('getJWT', CreateUserDto);
+    const user = await this.validateUser(CreateUserDto);
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.generateRefreshToken(user);
     return { accessToken, refreshToken };
   }
 
-  private async validateUser(oauthInfo: OauthInfo): Promise<User> {
-    // console.log('validateUser', oauthInfo);
-    const { email } = oauthInfo;
+  private async validateUser(CreateUserDto: CreateUserDto): Promise<User> {
+    // console.log('validateUser', CreateUserDto);
+    const { email } = CreateUserDto;
     const user =
       (await this.userService.user({ email })) ||
-      (await this.userService.createUser(oauthInfo));
+      (await this.userService.createUser(CreateUserDto));
     return user;
   }
 

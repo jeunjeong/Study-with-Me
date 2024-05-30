@@ -18,8 +18,11 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { User } from 'src/decorator/user.decorator';
+import { User as UserParam } from 'src/decorator/user.decorator';
 import { UserService } from 'src/user/user.service';
+import { ConnectUserDto } from 'src/user/dto/connect-user.dto';
+import { AtLeastOne } from 'src/util/type';
+import { User } from 'src/user/entities/user.entity';
 
 @ApiTags('AUTH')
 @Controller('auth')
@@ -33,10 +36,20 @@ export class AuthController {
   @Get()
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth('accessToken')
-  async get(@User() user: any) {
-    console.log(user);
-    console.log(await this.userService.user(user));
-    return 'JWT 인증 아무튼 됨';
+  @ApiOperation({
+    summary: '액세스 토큰 유효성 확인',
+    description:
+      '액세스 토큰이 유효한지 확인합니다. 유효하면, 유저 정보를 반환합니다.',
+  })
+  @ApiBearerAuth('accessToken')
+  @ApiOkResponse({
+    type: User,
+  })
+  async get(
+    @UserParam()
+    user: AtLeastOne<ConnectUserDto>,
+  ) {
+    return await this.userService.user(user);
   }
 
   @Get('refresh')
@@ -44,7 +57,7 @@ export class AuthController {
     summary: '액세스 토큰 갱신',
     description: '리프레시 토큰이 유효하면 액세스 토큰을 갱신합니다.',
   })
-  @ApiBearerAuth('accessToken')
+  @ApiBearerAuth('refreshToken')
   @ApiOkResponse({
     headers: {
       accessToken: { description: '새 액세스 토큰' },

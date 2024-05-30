@@ -2,6 +2,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// https://github.com/vegardit/prisma-generator-nestjs-dto
+generator nestjsDto {
+  provider                        = "prisma-generator-nestjs-dto"
+  output                          = "../src"
+  outputToNestJsResourceStructure = "true"
+  exportRelationModifierClasses   = "true"
+  reExport                        = "false"
+  createDtoPrefix                 = "Create"
+  updateDtoPrefix                 = "Update"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  fileNamingStyle                 = "camel"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
