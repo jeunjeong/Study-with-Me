@@ -13,12 +13,14 @@ import Chat from './components/chat/chat'
 
 import { ThemeProvider } from '@emotion/react'
 import { default as THEME } from './theme/theme'
+import useTheme from './theme/useTheme'
 
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
   const isSettingModalOpen = useRecoilValue(settingsModal)
 
-  const [theme, setTheme] = useState<string>('dark')
+  // const [theme, setTheme] = useState<string>('dark')
+  const [theme, onToggle] = useTheme()
 
   return (
     <React.Fragment>
@@ -27,9 +29,15 @@ function App(): JSX.Element {
           {isAttendGroupModalOpen && <AttendGroupModal />}
           {isSettingModalOpen && <SettingModal />}
 
-          <button
+          {/* <button
             style={{ position: 'absolute', zIndex: '999', left: '0', top: '0' }}
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            TOGGLE THEME
+          </button> */}
+          <button
+            style={{ position: 'absolute', zIndex: '999', left: '0', top: '0' }}
+            onClick={onToggle}
           >
             TOGGLE THEME
           </button>

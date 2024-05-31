@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 const useTheme = (): [typeof theme, typeof toggleTheme] => {
   const getInitialTheme = useCallback(() => {
-    let theme = window.localStorage.getItem('app_theme') as 'light' | 'dark' | null
+    let theme = window.localStorage.getItem('theme') as 'light' | 'dark' | null
     const INVALID_THEME = theme !== 'light' && theme !== 'dark'
 
     if (!theme || INVALID_THEME) {
@@ -20,7 +20,7 @@ const useTheme = (): [typeof theme, typeof toggleTheme] => {
   }, [])
 
   useEffect(() => {
-    window.localStorage.setItem('app_theme', theme)
+    window.localStorage.setItem('theme', theme)
   }, [theme])
 
   return [theme, toggleTheme]
