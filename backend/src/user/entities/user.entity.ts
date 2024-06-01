@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Provider } from '@prisma/client';
+import { Provider } from 'prisma/generated/postgresql';
 
 export class User {
   @ApiProperty()

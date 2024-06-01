@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+	output   = "./generated/postgresql"
 }
 
 // https://github.com/vegardit/prisma-generator-nestjs-dto
@@ -19,7 +20,7 @@ generator nestjsDto {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("PostgreSQL_URL")
 }
 
 model User {
