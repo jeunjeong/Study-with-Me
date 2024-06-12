@@ -1,28 +1,19 @@
-import Icon from './kakao-icon.png'
-import { Container, LoginButton, KakaoIcon } from './style'
 import { useState, useEffect } from 'react'
-import { loginAxios } from './loginaxios'
-import { useNavigate } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
+import { Container, LoginButton, KakaoIcon } from './style'
+import { loginAxios, getauth } from './loginaxios'
+import { useSetRecoilState } from 'recoil'
+import { loginState } from '@renderer/recoil/loginatom'
+import Icon from './kakao-icon.png'
 
 function Login(): JSX.Element {
   const [authCode, setAuthCode] = useState<string | null>(null)
-
-  const [cookies, setCookie] = useCookies(['accessToken'])
-
-  const navigate = useNavigate()
+  const isLoginState = useSetRecoilState(loginState)
   const handleLogin = (): void => {
     window.electron.ipcRenderer.send('open-auth-window')
   }
 
-  // useEffect(() => {
-  //   if (cookies) {
-  //     navigate('/main')
-  //   }
-  // }, [cookies])
-
   useEffect(() => {
-    const handleAuthToken = (event, code): void => {
+    const handleAuthToken = (code): void => {
       setAuthCode(code)
     }
     window.electron.ipcRenderer.on('auth-token', handleAuthToken)
@@ -34,7 +25,18 @@ function Login(): JSX.Element {
         try {
           const response = await loginAxios(authCode)
           if (response) {
-            console.log(response)
+            const authInfo = async (): Promise<void> => {
+              try {
+                const res = await getauth()
+                if (res) {
+                  isLoginState(true)
+                }
+                return
+              } catch (error) {
+                return
+              }
+            }
+            authInfo()
           }
           return
         } catch (error) {

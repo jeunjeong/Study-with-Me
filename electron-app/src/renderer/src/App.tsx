@@ -11,32 +11,40 @@ import SettingModal from './components/modal/setting-modal'
 import Header from './components/header/header'
 import Chat from './components/chat/chat'
 import TodoList from './components/todolist/todolist'
-import Login from './components/login/login'
+import { Container, Content } from './style'
+import { loginState } from './recoil/loginatom'
+import LoginModal from './components/modal/login-modal'
+import GlobalStyles from './styles/GlobalStyles'
 
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
   const isSettingModalOpen = useRecoilValue(settingsModal)
+  const isLoginState = useRecoilValue(loginState)
 
   return (
     <React.Fragment>
+      <GlobalStyles />
       <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/oauth/kakao-callback" element={<Redirect />} />
-        </Routes>
-        <React.Fragment>
-          <Header />
-          <Chat />
-          {isAttendGroupModalOpen && <AttendGroupModal />}
-          {isSettingModalOpen && <SettingModal />}
-          <SideBar />
-          <Routes>
-            <Route path="/main" element={<Home />} />
-            <Route path="/group" element={<Group />} />
-            <Route path="/todo" element={<TodoList />} />
-            <Route path="/group" element={<Group />} />
-          </Routes>
-        </React.Fragment>
+        {!isLoginState ? (
+          <LoginModal />
+        ) : (
+          <Container>
+            <SideBar />
+            <Content>
+              <Header />
+              <Chat />
+              {isAttendGroupModalOpen && <AttendGroupModal />}
+              {isSettingModalOpen && <SettingModal />}
+              <Routes>
+                <Route path="/oauth/kakao-callback" element={<Redirect />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/group" element={<Group />} />
+                <Route path="/todo" element={<TodoList />} />
+                <Route path="/group" element={<Group />} />
+              </Routes>
+            </Content>
+          </Container>
+        )}
       </Router>
     </React.Fragment>
   )
