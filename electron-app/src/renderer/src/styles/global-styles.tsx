@@ -15,7 +15,7 @@ const customStyles = css({
   }
 })
 
-const GlobalStyles = () => (
+const GlobalStyles = (): JSX.Element => (
   <React.Fragment>
     <BaseStyles />
     <Global styles={customStyles} />

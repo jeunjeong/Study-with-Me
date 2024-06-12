@@ -7,19 +7,15 @@ interface GroupsItemProps {
 
 export const Container = styled.div(() => [
   tw`
+  top-0 left-0 h-screen w-14
   `,
   css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 40px;
-    min-height: 100vh; /* 뷰포트의 100% 높이 */
-    max-height: 100%; /* 부모 요소의 높이를 초과하지 않음 */
     background-color: black;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
   `
 ])
 
@@ -29,6 +25,10 @@ export const GroupSection = styled.div(() => [
   css`
     margin-top: 15px;
     width: 100%;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   `
 ])
 
@@ -36,7 +36,7 @@ export const GroupsItem = styled.div<GroupsItemProps>(({ isSelected }) => [
   tw`
   `,
   css`
-    width: 40px;
+    width: 56px;
     aspect-ratio: 1 / 1;
     background-color: black;
     display: flex;

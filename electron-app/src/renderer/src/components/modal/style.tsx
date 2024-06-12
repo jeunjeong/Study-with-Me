@@ -12,12 +12,19 @@ export const Container = styled.div(() => [
     height: 500px;
     background-color: black;
     padding: 30px;
-    z-index: 1000;
+    z-index: 10;
     color: white;
     border-radius: 8px;
   `
 ])
 
+export const LoginContainer = styled.div(() => [
+  tw``,
+  css`
+    position: fixed;
+    width: 100%;
+  `
+])
 export const CloseButton = styled.img(() => [
   tw``,
   css`
