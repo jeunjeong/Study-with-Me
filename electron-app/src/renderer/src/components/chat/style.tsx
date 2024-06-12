@@ -97,7 +97,7 @@ export const Container = styled.div(({ show = 0 }: { show?: number }) => {
 
 export const Header = styled.div(() => {
   const theme = useTheme() as Theme
-  console.log('Current theme:', theme)
+  // console.log('Current theme:', theme)
 
   return [
     tw``,

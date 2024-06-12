@@ -72,9 +72,9 @@ const ChatMain: React.FC<ChatRoomProps> = ({ onClose, show }): JSX.Element => {
     setIsMain(true)
   }
 
-  useEffect(() => {
-    console.log(message)
-  }, [message])
+  // useEffect(() => {
+  //   console.log(message)
+  // }, [message])
 
   return (
     <React.Fragment>
