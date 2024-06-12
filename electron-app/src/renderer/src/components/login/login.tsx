@@ -13,7 +13,7 @@ function Login(): JSX.Element {
   }
 
   useEffect(() => {
-    const handleAuthToken = (code): void => {
+    const handleAuthToken = (event, code): void => {
       setAuthCode(code)
     }
     window.electron.ipcRenderer.on('auth-token', handleAuthToken)
