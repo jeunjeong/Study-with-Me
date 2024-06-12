@@ -3,7 +3,7 @@ import tw, { styled } from 'twin.macro'
 
 export const Container = styled.div(() => [
   tw`
-    items-center fixed top-0	left-0 min-h-20 w-screen pl-16 
+    items-center fixed top-0	min-h-20 w-screen pl-4 
   `,
   css`
     background-color: rgba(193, 215, 197, 1);
