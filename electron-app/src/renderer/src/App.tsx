@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SideBar from './components/sidebar/sidebar'
 import Home from './components/main/home'
@@ -16,14 +17,24 @@ import { loginState } from './recoil/loginatom'
 import LoginModal from './components/modal/login-modal'
 import GlobalStyles from './styles/GlobalStyles'
 
+import { ThemeProvider } from '@emotion/react'
+import { default as THEME } from './theme/theme'
+import useTheme from './theme/useTheme'
+
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
   const isSettingModalOpen = useRecoilValue(settingsModal)
+  const [theme, onToggle] = useTheme()
+
+
+
   const isLoginState = useRecoilValue(loginState)
 
   return (
     <React.Fragment>
       <GlobalStyles />
+      <ThemeProvider theme={THEME[theme]}>
+
       <Router>
         {!isLoginState ? (
           <LoginModal />
@@ -46,6 +57,7 @@ function App(): JSX.Element {
           </Container>
         )}
       </Router>
+      </ThemeProvider>
     </React.Fragment>
   )
 }
