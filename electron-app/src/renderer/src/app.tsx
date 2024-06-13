@@ -11,7 +11,7 @@ import AttendGroupModal from './components/modal/attend-group-modal'
 import SettingModal from './components/modal/setting-modal'
 import Header from './components/header/header'
 import Chat from './components/chat/chat'
-import { Container, Content } from './style'
+import { Container, Content, MainText, Head } from './style'
 import { loginState } from './recoil/loginatom'
 import LoginModal from './components/modal/login-modal'
 import GlobalStyles from './styles/global-styles'
@@ -78,17 +78,19 @@ function App(): JSX.Element {
               <SideBar />
               <Content>
                 <Header />
-                <Test onToggle={onToggle} onLogin={onLogin} />
+                {/* <Test onToggle={onToggle} onLogin={onLogin} /> */}
                 <Chat />
                 {isAttendGroupModalOpen && <AttendGroupModal />}
                 {isSettingModalOpen && <SettingModal />}
-                <Routes>
-                  <Route path="/oauth/kakao-callback" element={<Redirect />} />
-                  <Route path="/" element={<Home />} />
-                  <Route path="/group" element={<Group />} />
-                  {/* <Route path="/todo" element={<TodoList />} /> */}
-                  <Route path="/group" element={<Group />} />
-                </Routes>
+                <MainText>
+                  <Routes>
+                    <Route path="/oauth/kakao-callback" element={<Redirect />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/group" element={<Group />} />
+                    {/* <Route path="/todo" element={<TodoList />} /> */}
+                    <Route path="/group" element={<Group />} />
+                  </Routes>
+                </MainText>
               </Content>
             </Container>
           )}

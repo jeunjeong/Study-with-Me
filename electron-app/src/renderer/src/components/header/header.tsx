@@ -5,6 +5,7 @@ import hjh from '../../assets/profile/hjh.png'
 import kej from '../../assets/profile/kej.jpeg'
 import jej from '../../assets/profile/jej.png'
 import UserState from './user-window/user-state'
+import GridButton from '../grid/grid-button'
 
 function Friend({ name, isConnected, status, studySubject, img, onClick }) {
   if (isConnected) {
@@ -83,6 +84,7 @@ function Header() {
               onClick={handleUserClick}
             />
           ))}
+          <GridButton />
         </FriendListDiv>
       </Container>
       {selectedUser && <UserState user={selectedUser} onClose={CloseUserState} />}

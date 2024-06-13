@@ -5,7 +5,8 @@ export const Container = styled.div(() => [
   tw`
   `,
   css`
-    margin-left: 40px;
-    margin-top: 60px;
+    // margin-top: 70px;
+    height: 100%;
+    weith: 100%;
   `
 ])
