@@ -21,9 +21,11 @@ import { default as THEME } from './theme/theme'
 import useTheme from './theme/useTheme'
 import Test from './test/test'
 import { nameState, roomState } from './test/test-atom'
+
+import useSocket from '@renderer/socket/use-socket'
 import { io } from 'socket.io-client'
 
-let socket
+// let socket
 
 function App(): JSX.Element {
   const isAttendGroupModalOpen = useRecoilValue(attendGroupModal)
@@ -36,32 +38,16 @@ function App(): JSX.Element {
   const [name, setName] = useRecoilState<string>(nameState)
   const [room, setRoom] = useRecoilState<string>(roomState)
 
-  const ENDPOINT = 'localhost:5555'
-  socket = io(ENDPOINT)
-
-  useEffect(() => {
-    socket = io(ENDPOINT)
-
-    socket.emit('join', { name, room }, () => {})
-
-    // return () => {
-    //   socket.emit("disconnect");
-
-    //   socket.off();
-    // };
-  }, [ENDPOINT, name, room])
-
   const onLogin = (
     event: React.MouseEvent<HTMLButtonElement>,
     tempName: string,
     tempRoom: string
   ) => {
-    if (!tempName || !tempRoom) {
+    if (!tempName || !tempRoom || name) {
       event.preventDefault()
     } else {
       setName(tempName)
       setRoom(tempRoom)
-      console.log(tempName, tempRoom)
     }
   }
   //
