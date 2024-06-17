@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+import fs from 'fs'
 // mainWindow를 전역 변수로 선언
 let mainWindow: BrowserWindow | null = null
 
@@ -49,6 +50,17 @@ app.whenReady().then(() => {
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+
+  // Use Dummy Data
+  ipcMain.handle('fetch-data', async (event, filePath) => {
+    try {
+      const data = await fs.promises.readFile(filePath, 'utf-8')
+      return JSON.parse(data)
+    } catch (error) {
+      console.error('Error reading file:', error)
+      throw error
+    }
   })
 })
 

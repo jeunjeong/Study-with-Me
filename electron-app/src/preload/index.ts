@@ -1,6 +1,9 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
+// Use Dummy Data
+import path from 'path'
+
 // Custom APIs for renderer
 const api = {
   // `send` 메소드를 `api` 객체에 추가합니다.
@@ -12,7 +15,11 @@ const api = {
     if (allowedChannels.includes(channel)) {
       ipcRenderer.send(channel, ...args)
     }
-  }
+  },
+
+  // Use Dummy Data
+  fetchFilePath: (relativePath) => path.join(__dirname, relativePath),
+  fetchData: (filePath) => ipcRenderer.invoke('fetch-data', filePath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -1,58 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as c from './style'
 import { useRecoilState } from 'recoil'
 import { chatRoomState, activatedChatState } from '../../recoil/chatatom'
 import back from '../../assets/cicon/back.svg'
 import close from '../../assets/cicon/close.svg'
 
-import tempImg from '@renderer/assets/cicon/snail.jpg'
 import GroupCard from './group-card'
 import ChatRoom from './chat-room'
-
-interface Group {
-  groupId: number
-  name: string
-  newMessage: boolean
-  // 아마도 이미지는 url 이지 않을까
-  img: string
-}
-const groups: Group[] = [
-  {
-    groupId: 1,
-    name: 'Group1',
-    newMessage: true,
-    img: tempImg
-  },
-  {
-    groupId: 2,
-    name: 'Group2',
-    newMessage: true,
-    img: tempImg
-  },
-  {
-    groupId: 3,
-    name: 'Group3',
-    newMessage: true,
-    img: tempImg
-  },
-  {
-    groupId: 4,
-    name: 'Group4',
-    newMessage: true,
-    img: tempImg
-  }
-]
+import { Data, Room } from './type'
 
 interface ChatRoomProps {
   onClose: () => void
   show: number
+  rooms?: Room[] | undefined
 }
 
-function ChatMain({ onClose, show }: ChatRoomProps): JSX.Element {
+function ChatMain({ onClose, show, rooms }: ChatRoomProps): JSX.Element {
   const [isMain, setIsMain] = useState<boolean>(true)
   const [currentChat, setCurrentChat] = useRecoilState<number>(activatedChatState)
 
   const [message, setMessage] = useState('')
+
+  //   console.log(rooms)
 
   const groupClickHandler = (groupId: number): void => {
     setCurrentChat(groupId)
@@ -64,9 +33,24 @@ function ChatMain({ onClose, show }: ChatRoomProps): JSX.Element {
     setIsMain(true)
   }
 
-  // useEffect(() => {
-  //   console.log(message)
-  // }, [message])
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const api = window.api as {
+  //           fetchFilePath: (relativePath: string) => string
+  //           fetchData: (filePath: string) => Promise<any>
+  //         }
+
+  //         const relativePath = '/datas/data.json'
+  //         const filePath = api.fetchFilePath(relativePath)
+  //         const responseData = await api.fetchData(filePath)
+  //         console.log('data : ', responseData.data)
+  //       } catch (error) {
+  //         console.error('Error fetching data:', error)
+  //       }
+  //     }
+  //     fetchData()
+  //   }, [])
 
   return (
     <React.Fragment>
@@ -84,8 +68,13 @@ function ChatMain({ onClose, show }: ChatRoomProps): JSX.Element {
         {/* 채팅창목록 */}
         {isMain && (
           <c.Content>
-            {groups.map((group) => (
-              <GroupCard key={group.groupId} groupInfo={group} onClick={groupClickHandler} />
+            {rooms?.map((room) => (
+              <GroupCard
+                key={room.id}
+                groupInfo={room.info}
+                roomId={room.id}
+                onClick={groupClickHandler}
+              />
             ))}
           </c.Content>
         )}

@@ -3,6 +3,7 @@ import * as c from './style'
 import ReactEmoji from 'react-emoji'
 
 import tempImg from '@renderer/assets/cicon/snail.jpg'
+import { Message } from './type'
 
 interface TempMessage {
   user: string
@@ -10,30 +11,29 @@ interface TempMessage {
 }
 
 interface MessageProps {
-  message: TempMessage
+  message: Message
   name: string
 }
-
-const Message: React.FC<MessageProps> = ({ message, name }) => {
-  const isSentByCurrentUser: boolean = message.user === 'user1'
+function MessageBox({ message, name }: MessageProps): JSX.Element {
+  const isSentByCurrentUser: boolean = message.name === name
 
   return isSentByCurrentUser ? (
     <c.SentByCurrentUser>
       <c.CurrentUserMessageBox>
-        <c.MessageText>{ReactEmoji.emojify(message.text)}</c.MessageText>
+        <c.MessageText>{ReactEmoji.emojify(message.content)}</c.MessageText>
       </c.CurrentUserMessageBox>
     </c.SentByCurrentUser>
   ) : (
     <c.SentByOtherUser>
       <c.UserImage src={tempImg} alt="userImage" />
       <c.OtherUserMessageWrapper>
-        <c.MessageName>{message.user}</c.MessageName>
+        <c.MessageName>{message.name}</c.MessageName>
         <c.OtherUserMessageBox>
-          <c.MessageText>{ReactEmoji.emojify(message.text)}</c.MessageText>
+          <c.MessageText>{ReactEmoji.emojify(message.content)}</c.MessageText>
         </c.OtherUserMessageBox>
       </c.OtherUserMessageWrapper>
     </c.SentByOtherUser>
   )
 }
 
-export default Message
+export default MessageBox

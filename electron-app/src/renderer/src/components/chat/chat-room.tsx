@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import * as c from './style'
-import { useRecoilState } from 'recoil'
-import { chatRoomState, activatedChatState } from '../../recoil/chatatom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { chatRoomState, activatedChatState, userNameState } from '../../recoil/chatatom'
 
 import Input from './input'
 import Messages from './messages'
 
 import tempImg from '@renderer/assets/cicon/snail.jpg'
+import { Message, Room } from './type'
 
 interface TempMessage {
   user: string
@@ -27,6 +28,10 @@ const tempMessages: TempMessage[] = [
   { user: 'user1', text: 'there is log message from current user ~~~~~~~~~~~ message12' }
 ]
 
+interface ChatRoomProps {
+  roomId?: number
+}
+
 function ChatRoom(): JSX.Element {
   // const { groupId, name, newMessage, img } = groupInfo
 
@@ -36,16 +41,19 @@ function ChatRoom(): JSX.Element {
   const [message, setMessage] = useState<string>('')
 
   // tempmessage test
-  const [messages, setMessages] = useState<TempMessage[]>(tempMessages)
+  const [messages, setMessages] = useState<Message[]>([])
 
-  const [currentChat, setCurrentChat] = useRecoilState<number>(activatedChatState)
+  const roomId = useRecoilValue<number>(activatedChatState)
+  const userName = useRecoilValue<string>(userNameState)
+
+  const [roomData, setRoomData] = useState<Room>()
 
   const sendMessage = (
     event: React.SyntheticEvent<HTMLTextAreaElement | HTMLButtonElement>
   ): void => {
     event.preventDefault()
     if (message.length === 0) return
-    setMessages([...messages, { user: 'user1', text: message }])
+    setMessages([...messages, { name: userName, content: message }])
     setMessage('')
   }
 
@@ -54,18 +62,42 @@ function ChatRoom(): JSX.Element {
     console.log(messages)
   }, [messages])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const api = window.api as {
+          fetchFilePath: (relativePath: string) => string
+          fetchData: (filePath: string) => Promise<any>
+        }
+
+        const relativePath = '/datas/data.json'
+        const filePath = api.fetchFilePath(relativePath)
+        const responseData = await api.fetchData(filePath)
+        setRoomData(responseData.data.rooms.find((room) => room.id === roomId))
+        setMessages(responseData.data.rooms.find((room) => room.id === roomId).messages)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  //   useEffect(() => {
+  //     console.log(roomData)
+  //   }, [roomData])
+
   return (
     <React.Fragment>
       <c.Content>
         <c.ChatHeader>
           <c.GroupImage src={tempImg} alt="groupImg" />
           <c.ChatSummary>
-            <c.GroupName>Group{currentChat}</c.GroupName>
+            <c.GroupName>Group{roomId}</c.GroupName>
             <c.MemberInfoText>N Online</c.MemberInfoText>
             <c.MemberInfoText>N Studying about this group</c.MemberInfoText>
           </c.ChatSummary>
         </c.ChatHeader>
-        <Messages messages={messages} name={name} />
+        <Messages messages={messages} name={userName} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </c.Content>
     </React.Fragment>

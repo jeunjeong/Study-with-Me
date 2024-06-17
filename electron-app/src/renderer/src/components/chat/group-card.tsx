@@ -1,5 +1,8 @@
 import React from 'react'
 import * as c from './style'
+import { GroupInfo } from './type'
+
+import tempImg from '@renderer/assets/cicon/snail.jpg'
 
 interface Group {
   groupId: number
@@ -11,17 +14,18 @@ interface Group {
 
 interface GroupCardProps {
   onClick: (groupId: number) => void
-  groupInfo: Group
+  groupInfo: GroupInfo
+  roomId: number
 }
 
-function GroupCard({ onClick, groupInfo }: GroupCardProps): JSX.Element {
-  const { groupId, name, newMessage, img } = groupInfo
+function GroupCard({ onClick, groupInfo, roomId }: GroupCardProps): JSX.Element {
+  const { id, name, members, img } = groupInfo
 
   console.log()
 
   return (
     <React.Fragment>
-      <c.GroupCard onClick={() => onClick(groupInfo.groupId)}>
+      <c.GroupCard onClick={() => onClick(roomId)}>
         <c.GroupImage src={img} alt="groupImg" />
         <c.ChatSummary>
           <c.GroupName>{name}</c.GroupName>

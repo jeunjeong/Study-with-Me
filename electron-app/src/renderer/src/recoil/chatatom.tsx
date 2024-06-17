@@ -15,3 +15,8 @@ export const activatedChatState = atom<number>({
   key: 'activatedChatState',
   default: 0
 })
+
+export const userNameState = atom<string>({
+  key: 'userNameState',
+  default: ''
+})

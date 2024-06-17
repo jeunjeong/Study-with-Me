@@ -1,6 +1,9 @@
 import React from 'react'
-import Message from './message'
+import MessageBox from './message-box'
 import * as c from './style'
+import { Message } from './type'
+import { useRecoilValue } from 'recoil'
+import { userNameState } from '@renderer/recoil/chatatom'
 
 interface TempMessage {
   user: string
@@ -8,15 +11,18 @@ interface TempMessage {
 }
 
 interface MessagesProps {
-  messages: TempMessage[]
+  messages: Message[] | undefined
   name: string
 }
 
-const Messages: React.FC<MessagesProps> = ({ messages, name }) => {
+function Messages({ messages, name }: MessagesProps): JSX.Element {
+  console.log(name, messages)
+  const currentUserName = useRecoilValue(userNameState)
+
   return (
     <c.MessageLogContaner>
-      {messages.map((message, i) => (
-        <Message key={i} message={message} name={name} />
+      {messages?.map((message, i) => (
+        <MessageBox key={i} message={message} name={currentUserName} />
       ))}
     </c.MessageLogContaner>
   )
