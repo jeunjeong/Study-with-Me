@@ -3,28 +3,25 @@ import MessageBox from './message-box'
 import * as c from './style'
 import { Message } from './type'
 import { useRecoilValue } from 'recoil'
-import { userNameState } from '@renderer/recoil/chatatom'
 
-interface TempMessage {
-  user: string
-  text: string
-}
+// use dummy data
+import { userNameState } from '@renderer/recoil/chatatom'
 
 interface MessagesProps {
   messages: Message[] | undefined
-  name: string
 }
 
-function Messages({ messages, name }: MessagesProps): JSX.Element {
-  console.log(name, messages)
+function Messages({ messages }: MessagesProps): JSX.Element {
   const currentUserName = useRecoilValue(userNameState)
 
   return (
-    <c.MessageLogContaner>
-      {messages?.map((message, i) => (
-        <MessageBox key={i} message={message} name={currentUserName} />
-      ))}
-    </c.MessageLogContaner>
+    <React.Fragment>
+      <c.MessageLogContaner>
+        {messages?.map((message, i) => (
+          <MessageBox key={i} message={message} name={currentUserName} />
+        ))}
+      </c.MessageLogContaner>
+    </React.Fragment>
   )
 }
 

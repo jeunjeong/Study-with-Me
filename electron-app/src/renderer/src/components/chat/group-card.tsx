@@ -2,16 +2,6 @@ import React from 'react'
 import * as c from './style'
 import { GroupInfo } from './type'
 
-import tempImg from '@renderer/assets/cicon/snail.jpg'
-
-interface Group {
-  groupId: number
-  name: string
-  newMessage: boolean
-  // 아마도 이미지는 url 이지 않을까
-  img: string
-}
-
 interface GroupCardProps {
   onClick: (groupId: number) => void
   groupInfo: GroupInfo

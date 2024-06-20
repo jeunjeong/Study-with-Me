@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SideBar from './components/sidebar/sidebar'
@@ -19,11 +19,11 @@ import GlobalStyles from './styles/global-styles'
 import { ThemeProvider } from '@emotion/react'
 import { default as THEME } from './theme/theme'
 import useTheme from './theme/useTheme'
-import Test from './test/test'
-import { nameState, roomState } from './test/test-atom'
 
-import useSocket from '@renderer/socket/use-socket'
-import { io } from 'socket.io-client'
+import Test from './test/test'
+
+import { useSocket } from './contexts/socket-context'
+import { userNameState } from './recoil/chatatom'
 
 // let socket
 
@@ -35,19 +35,30 @@ function App(): JSX.Element {
   const isLoginState = useRecoilValue(loginState)
 
   // Socket Test
-  const [name, setName] = useRecoilState<string>(nameState)
-  const [room, setRoom] = useRecoilState<string>(roomState)
+  const [name, setName] = useRecoilState<string>(userNameState)
 
+  const { socket } = useSocket()
   const onLogin = (
     event: React.MouseEvent<HTMLButtonElement>,
     tempName: string,
     tempRoom: string
   ) => {
-    if (!tempName || !tempRoom || name) {
+    if (!tempName || name) {
+      console.log('is logged in', isLoginState, name)
+
       event.preventDefault()
     } else {
       setName(tempName)
-      setRoom(tempRoom)
+
+      if (socket) {
+        console.log(`change name ${name} to ${tempName}`)
+
+        socket.emit('setUserNick', tempName)
+        socket.emit('getUserNick')
+        socket.on('serverMessage', (receive) => {
+          console.log(receive)
+        })
+      }
     }
   }
 
@@ -66,7 +77,7 @@ function App(): JSX.Element {
               <Content>
                 <Header />
                 <Test onToggle={onToggle} onLogin={onLogin} />
-                <Chat />
+                {name && <Chat />}
                 {isAttendGroupModalOpen && <AttendGroupModal />}
                 {isSettingModalOpen && <SettingModal />}
                 <Routes>

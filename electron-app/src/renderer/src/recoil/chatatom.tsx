@@ -16,6 +16,7 @@ export const activatedChatState = atom<number>({
   default: 0
 })
 
+// dummy data test
 export const userNameState = atom<string>({
   key: 'userNameState',
   default: ''

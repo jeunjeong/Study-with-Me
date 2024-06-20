@@ -1,66 +1,44 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as c from './style'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { chatRoomState, activatedChatState, userNameState } from '../../recoil/chatatom'
+import { useRecoilValue } from 'recoil'
+import { activatedChatState, userNameState } from '../../recoil/chatatom'
 
 import Input from './input'
 import Messages from './messages'
 
 import tempImg from '@renderer/assets/cicon/snail.jpg'
-import { Message, Room } from './type'
-
-interface TempMessage {
-  user: string
-  text: string
-}
-const tempMessages: TempMessage[] = [
-  { user: 'user1', text: 'message1' },
-  { user: 'user1', text: 'message2' },
-  { user: 'user2', text: 'message3' },
-  { user: 'user1', text: 'message4' },
-  { user: 'user1', text: 'message5' },
-  { user: 'user2', text: 'message6' },
-  { user: 'user2', text: 'there is log message from other user ~~~~~~~~~~~ message7' },
-  { user: 'user1', text: 'message8' },
-  { user: 'user1', text: 'message9' },
-  { user: 'user1', text: 'message10' },
-  { user: 'user2', text: '한글로 적으면 이런 느낌으로 내용들이 나올겁니다. message11' },
-  { user: 'user1', text: 'there is log message from current user ~~~~~~~~~~~ message12' }
-]
-
-interface ChatRoomProps {
-  roomId?: number
-}
+import { Message } from './type'
+import { useSocket } from '@renderer/contexts/socket-context'
 
 function ChatRoom(): JSX.Element {
-  // const { groupId, name, newMessage, img } = groupInfo
-
-  // get name from socket or server
-  const [name, setName] = useState<string>('')
-
   const [message, setMessage] = useState<string>('')
 
   // tempmessage test
   const [messages, setMessages] = useState<Message[]>([])
 
   const roomId = useRecoilValue<number>(activatedChatState)
-  const userName = useRecoilValue<string>(userNameState)
 
-  const [roomData, setRoomData] = useState<Room>()
+  //dummy data -> test-atom
+  const userName = useRecoilValue(userNameState)
+
+  const { socket } = useSocket()
 
   const sendMessage = (
     event: React.SyntheticEvent<HTMLTextAreaElement | HTMLButtonElement>
   ): void => {
     event.preventDefault()
     if (message.length === 0) return
-    setMessages([...messages, { name: userName, content: message }])
+    // 왜 콜백이 안되는지 나도 모르겠음
+    if (socket) {
+      socket.emit('sendMessage', { name: userName, content: message }, () => {})
+    }
     setMessage('')
   }
 
-  useEffect(() => {
-    // check messages
-    console.log(messages)
-  }, [messages])
+  // useEffect(() => {
+  //   // check messages
+  //   console.log(messages)
+  // }, [messages])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,10 +48,9 @@ function ChatRoom(): JSX.Element {
           fetchData: (filePath: string) => Promise<any>
         }
 
-        const relativePath = '/datas/data.json'
+        const relativePath = '../datas/data.json'
         const filePath = api.fetchFilePath(relativePath)
         const responseData = await api.fetchData(filePath)
-        setRoomData(responseData.data.rooms.find((room) => room.id === roomId))
         setMessages(responseData.data.rooms.find((room) => room.id === roomId).messages)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -82,9 +59,21 @@ function ChatRoom(): JSX.Element {
     fetchData()
   }, [])
 
-  //   useEffect(() => {
-  //     console.log(roomData)
-  //   }, [roomData])
+  useEffect(() => {
+    if (socket) {
+      const handleServerMessage = (receive) => {
+        const { name, content } = receive.content
+        console.log(name, content)
+        setMessages((prevMessages) => [...prevMessages, { name, content }])
+      }
+
+      socket.on('serverMessage', handleServerMessage)
+
+      return () => {
+        socket.off('serverMessage', handleServerMessage)
+      }
+    }
+  }, [socket])
 
   return (
     <React.Fragment>
@@ -97,7 +86,7 @@ function ChatRoom(): JSX.Element {
             <c.MemberInfoText>N Studying about this group</c.MemberInfoText>
           </c.ChatSummary>
         </c.ChatHeader>
-        <Messages messages={messages} name={userName} />
+        <Messages messages={messages} />
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </c.Content>
     </React.Fragment>
