@@ -20,3 +20,14 @@ export const Content = styled.div(() => [
     height: 100%;
   `
 ])
+
+export const Head = styled.div(() => [tw``, css``])
+
+export const MainText = styled.div(() => [
+  tw`
+  `,
+  css`
+    width: 100%;
+    height: 100%;
+  `
+])

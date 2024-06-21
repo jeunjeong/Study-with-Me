@@ -17,6 +17,7 @@ export const Content = styled.div(() => [
   tw`flex `,
   css`
     height: 100%;
+    align-items: center;
   `
 ])
 

@@ -1,7 +1,7 @@
 import { css, keyframes } from '@emotion/react'
 import tw, { styled } from 'twin.macro'
 interface ContainerProps {
-  showChatRoom?: boolean
+  showChatRoom?: number
   isClosing?: boolean
 }
 export const Container = styled.div<ContainerProps>(({ showChatRoom, isClosing }) => [
@@ -13,7 +13,7 @@ export const Container = styled.div<ContainerProps>(({ showChatRoom, isClosing }
     color: white;
     width: 350px;
     height: 100%;
-    right: ${showChatRoom ? '350px' : '0'};
+    right: ${showChatRoom === 1 ? '350px' : '0'};
     animation: ${isClosing ? slideOut : slideIn} 0.5s forwards;
     transition: right 0.4s ease-out;
   `

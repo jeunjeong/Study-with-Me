@@ -1,6 +1,6 @@
 import React from 'react'
 import * as Style from './style'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { mainToolState } from '@renderer/recoil/toolatom'
 
 function GridButton() {

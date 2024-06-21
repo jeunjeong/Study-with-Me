@@ -13,7 +13,7 @@ function Home(): JSX.Element {
     <React.Fragment>
       <Container>
         {showTool === 1 && <MainTool />}
-        여기는 메에에에에ㅔ에ㅔ인
+        {/* 여기는 메에에에에ㅔ에ㅔ인 */}
         <GridWindow />
       </Container>
     </React.Fragment>

@@ -12,6 +12,7 @@ export const GridDiv = styled.div(() => [
   css`
     padding: 5px;
     width: 100%;
+    height: 100%;
   `
 ])
 
@@ -32,13 +33,12 @@ export const Test = styled.div(() => [
     grid grid-flow-dense grid-cols-6 grid-rows-5 gap-4 
   `,
   css`
-    height: 80vh;
+    height: 100%;
   `
 ])
 
 export const Square = styled.div(() => [
   tw`
-    row-span-2
   `,
   css`
     background-color: pink;
@@ -46,7 +46,6 @@ export const Square = styled.div(() => [
 ])
 export const Square2 = styled.div(() => [
   tw`
-    row-span-2 col-span-2
   `,
   css`
     background-color: pink;

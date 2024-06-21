@@ -7,55 +7,52 @@ const ItemType = 'GRID_SQUARE'
 interface GridSquareProps {
   id: number
   content: React.ReactNode
+  row: number
+  col: number
   moveGridSquare: (fromId: number, toId: number) => void
 }
 
-function GridSquare({ id, content, moveGridSquare }: GridSquareProps) {
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
+function GridSquare({
+  id,
+  content,
+  row,
+  col,
+  moveGridSquare
+}: GridSquareProps): React.ReactElement {
+  const [{ isDragging }, drag] = useDrag<{ id: number }, unknown, { isDragging: boolean }>(
+    {
       type: ItemType,
       item: { id },
       collect: (monitor) => ({
         isDragging: monitor.isDragging()
       }),
-      end: (item, monitor) => {}
-    }),
+      end: () => {}
+    },
     [id]
   )
 
-  const [, drop] = useDrop(
-    () => ({
+  const [, drop] = useDrop<{ id: number }, unknown, unknown>(
+    {
       accept: ItemType,
       hover: (draggedItem: { id: number }) => {
         if (draggedItem.id !== id) {
           moveGridSquare(draggedItem.id, id)
         }
       }
-    }),
+    },
     [id, moveGridSquare]
   )
 
-  const opacity = isDragging ? 0.5 : 1 // 드래깅 중일 때 투명도ㄹ를 줘서 알아보기쉽게
+  const opacity = isDragging ? 0.5 : 1
 
   return (
-    <Style.Square ref={(node) => drag(drop(node))} style={{ opacity }}>
+    <Style.Square
+      ref={(node) => drag(drop(node))}
+      style={{ opacity, gridRowEnd: `span ${row}`, gridColumnEnd: `span ${col}` }}
+    >
       {content}
     </Style.Square>
   )
-
-  // if (content === 'Test1') {
-  //   return (
-  //     <Style.test1 ref={(node) => drag(drop(node))} style={{ opacity }}>
-  //       {where}
-  //     </Style.test1>
-  //   )
-  // } else {
-  //   return (
-  //     <Style.test2 ref={(node) => drag(drop(node))} style={{ opacity }}>
-  //       {where}
-  //     </Style.test2>
-  //   )
-  // }
 }
 
 export default GridSquare
