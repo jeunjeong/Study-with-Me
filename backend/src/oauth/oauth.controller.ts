@@ -77,13 +77,13 @@ export class OauthController {
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       sameSite: 'none',
-      secure: true,
+      // secure: true,
       maxAge: 3600 * 1000, // 1h
     });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       sameSite: 'none',
-      secure: true,
+      // secure: true,
       maxAge: 14 * 24 * 3600 * 1000, // 14d
     });
     res.status(HttpStatus.OK).send();

@@ -28,9 +28,31 @@ model User {
   email    String   @unique @db.VarChar(50)
   name     String   @db.VarChar(50)
   provider Provider
+  ownedGroup Group[]
+  joinedGroup GroupMember[]
 }
 
 enum Provider {
   kakao
   github
 }
+
+model Group {
+  id    String  @id @default(uuid())
+  name  String  @unique @db.VarChar(50)
+  leaderId String
+  leader User @relation(fields: [leaderId], references: [id])
+  groupMembers GroupMember[]
+  createdAt DateTime @default(now())
+}
+
+model GroupMember {
+  groupId String
+  group Group @relation(fields: [groupId], references: [id])
+  memberId String
+  member User @relation(fields: [memberId], references: [id])
+  @@id([groupId, memberId])
+  joinedAt DateTime @default(now())
+}
+
+

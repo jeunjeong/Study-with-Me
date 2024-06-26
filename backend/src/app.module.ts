@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { OauthModule } from './oauth/oauth.module';
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { OauthModule } from './oauth/oauth.module';
     }),
     PrismaModule,
     OauthModule,
+    GroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],
