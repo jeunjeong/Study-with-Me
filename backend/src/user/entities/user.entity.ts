@@ -1,16 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Provider } from 'prisma/generated/postgresql';
+import { Group } from '../../group/entities/group.entity';
+import { GroupMember } from '../../group/entities/groupMember.entity';
 
 export class User {
-  @ApiProperty()
   id: string;
-
-  @ApiProperty()
   email: string;
-
-  @ApiProperty()
   name: string;
-
-  @ApiProperty({ enum: Provider })
   provider: Provider;
+  ownedGroup?: Group[];
+  joinedGroup?: GroupMember[];
 }
