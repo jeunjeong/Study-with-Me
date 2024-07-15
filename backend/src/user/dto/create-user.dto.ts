@@ -1,4 +1,4 @@
-import { Provider } from '@prisma/client';
+import { Provider } from 'prisma/generated/postgresql';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
