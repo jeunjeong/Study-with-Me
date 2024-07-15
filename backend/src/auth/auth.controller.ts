@@ -77,4 +77,18 @@ export class AuthController {
       throw new UnauthorizedException();
     }
   }
+
+  @Get('logout')
+  @ApiOperation({
+    summary: '로그아웃',
+    description: '쿠키에 등록된 액세스 및 리프레쉬 토큰을 삭제합니다.',
+  })
+  @ApiBearerAuth('accessToken')
+  @ApiOkResponse({})
+  @HttpCode(HttpStatus.OK)
+  async logout(@Req() req: Request, @Res() res: Response) {
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    res.status(HttpStatus.OK).send();
+  }
 }
