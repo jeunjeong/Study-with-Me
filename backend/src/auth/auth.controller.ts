@@ -69,11 +69,26 @@ export class AuthController {
       const newAccessToken = await this.authService.refresh(
         req.cookies.refreshToken,
       );
-      res.cookie('accessToken', newAccessToken, { httpOnly: true });
+      res.cookie('accessToken', newAccessToken, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 3600 * 1000, // 1h
+      });
       return res.send();
     } catch (err) {
-      res.cookie('accessToken', '', { httpOnly: true });
-      res.cookie('refreshToken', '', { httpOnly: true });
+      res.clearCookie('accessToken', {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 3600 * 1000, // 1h
+      });
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 3600 * 1000, // 1h
+      });
       throw new UnauthorizedException();
     }
   }
@@ -87,8 +102,16 @@ export class AuthController {
   @ApiOkResponse({})
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request, @Res() res: Response) {
-    res.cookie('accessToken', '', { httpOnly: true });
-    res.cookie('refreshToken', '', { httpOnly: true });
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
     res.status(HttpStatus.OK).send();
   }
 }
