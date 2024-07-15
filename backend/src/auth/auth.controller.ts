@@ -72,8 +72,8 @@ export class AuthController {
       res.cookie('accessToken', newAccessToken, { httpOnly: true });
       return res.send();
     } catch (err) {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
+      res.cookie('accessToken', '', { httpOnly: true });
+      res.cookie('refreshToken', '', { httpOnly: true });
       throw new UnauthorizedException();
     }
   }
@@ -87,8 +87,8 @@ export class AuthController {
   @ApiOkResponse({})
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request, @Res() res: Response) {
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.cookie('accessToken', '', { httpOnly: true });
+    res.cookie('refreshToken', '', { httpOnly: true });
     res.status(HttpStatus.OK).send();
   }
 }
